@@ -1,0 +1,796 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.theme-light {
+  --border-color: darkgray;
+  --color: black;
+  --bright-color: gray;
+  --background-color: white;
+  --background-alt-color: beige;
+  --background-image: url("/images/bgimage2.gif");
+  --red: pink;
+  --neut: aqua;
+  --green: aquamarine;
+  --glass: #eeeeee88;
+  --menu-color: #080808;
+  --menu-hover-background: #CFD8DC;
+  --menu-hover-color: #00a000;
+  --visibility-light: visible;
+  --visibility-dark: hidden;
+  --display-light: block;
+  --display-dark: none;
+}
+
+.theme-dark  {
+  --border-color: gray;
+  --color: beige;
+  --background-color: black;
+  --background-alt-color: #202020;
+  --background-color-translucent: #000000C0;
+  --background-image: url("/images/bgimage3.gif");
+  --red: darkred;
+  --neut: blue;
+  --green: green;
+  --glass: #00000088;
+  --menu-color: #f2f6ae;
+  --menu-hover-background: #CFD8DC;
+  --menu-hover-color: #00a000;
+  --visibility-light: hidden;
+  --visibility-dark: visible;
+  --display-light: none;
+  --display-dark: block;
+  
+  --ck-color-text: white;
+  --ck-color-base-foreground: hsl(0, 100%, 94%);
+  --ck-color-base-background: #000000B0;
+  --ck-custom-background: #000000B0;
+  --ck-custom-foreground: hsl(0, 0%, 100%);
+  --ck-custom-border: hsl(300, 1%, 22%);
+  --ck-custom-white: hsl(0, 0%, 0%);
+  --ck-color-base-border: hsl(0, 0%, 13%);
+  --ck-color-base-action: hsl(104, 50.2%, 42.5%);
+  --ck-color-base-focus: hsl(209, 92%, 70%);
+  --ck-color-base-text: hsl(63, 68%, 89%);
+  --ck-color-base-active: hsl(218.1, 100%, 58%);
+  --ck-color-base-active-focus: hsl(218.2, 100%, 52.5%);
+  --ck-color-base-error: hsl(15, 100%, 43%);
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: hsl(0, 37%, 15%);
+  --ck-color-button-default-active-background: hsl(0, 0%, 26%);
+  --ck-color-button-default-disabled-background: transparent;
+  --ck-color-button-on-background: hsl(0, 0%, 1%);
+  --ck-color-button-on-hover-background: hsl(211.7, 100%, 92.9%);
+  --ck-color-button-on-active-background: hsl(0, 0%, 0%);
+  --ck-color-button-on-disabled-background: hsl(211, 15%, 95%);
+  --ck-color-button-on-color: hsl(218.1, 100%, 58%);
+  --ck-color-toolbar-background: var(--ck-custom-background);
+  --ck-color-toolbar-border: var(--ck-custom-border);
+  --ck-color-button-action-background: hsl(168, 76%, 42%);
+  --ck-color-button-action-hover-background: hsl(168, 76%, 38%);
+  --ck-color-button-action-active-background: hsl(168, 76%, 36%);
+  --ck-color-button-action-active-shadow: hsl(168, 75%, 34%);
+  --ck-color-button-action-disabled-background: hsl(168, 76%, 42%);
+  --ck-color-button-action-text: var(--ck-custom-white);
+}
+
+html {
+  background-size: contain;
+}   
+
+body {
+  color: var(--color);
+  background-image: var(--background-image);
+  background-size: contain;
+	height: 100vh;
+	width: 80vw;
+	overflow-x: hidden;
+	margin-left: 10vw;
+  margin: 1em auto;
+  padding: 0 1em;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.15em;
+  @media (max-width: 900px) {
+    background-image: none;
+    background: #0d0b0b;
+  }
+}
+
+#dimmer {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background-color-translucent);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  @media (min-width: 900px) {
+    display: none;
+  }
+}
+
+#mainHeading {
+	text-align: center;
+  margin-bottom: 0px;
+  font-size: 2.5em;
+  @media (max-width: 900px) {
+    font-size: 5vw;
+  }
+  @media (max-width: 600px) {
+    font-size: 1.6em;
+  }
+}
+
+#subHeading {
+  text-align: center;
+  margin-top: 0px;
+  font-size: 1.5em;
+  @media (max-width: 900px) {
+    font-size: 3vw;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.95em;
+  }
+}
+
+#navbar {
+  display: none;
+  @media (min-width: 900px) {
+    display: flex;
+    color: var(--menu-color);
+    width: fit-content;
+  }
+}
+
+#navbarContainer {
+  display: flex;
+  justify-content: center;
+}
+#navbutton {
+  display: none;
+  @media (max-width: 900px) {
+    display: flex;
+    top: 35px;
+    left: 35px;
+    position: absolute;
+    background-color: transparent;
+    z-index: 150;
+  }
+}
+
+#navbuttonbox {
+  display: none;
+  @media (max-width: 900px) {
+    display: flex;
+    border: solid 1px var(--border-color);
+    z-index: 150;
+    position: absolute;
+    background-color: var(--background-color);
+    color: var(--color);
+    padding: 10px;
+    transition: 250ms;
+  }
+}
+
+.menulist {
+  li {
+    font-size: 2em;
+    padding-bottom: 10px;
+  }
+}
+
+#trigram {
+  border: none;
+  align-items: center;
+  justify-content: left;
+  flex-direction: column;
+  display: flex;
+  gap: .5rem;
+  span {
+    width: 30px;
+    height: 2px;
+    background-color: var(--menu-color);
+  }
+}
+
+.present {
+  left: 100px;
+}
+
+.absent {
+  left: -500px;
+}
+
+.dimmed {
+  display: flex;
+}
+
+.undimmed {
+  display: none;
+}
+
+.post {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  padding-top: 0px;
+  margin-bottom: 20px;
+  background-color: #181818;
+  background-color: var(--background-color);
+  width: 80vw;
+}
+
+.postAuthor {
+  margin-top: 0px;
+}
+
+.fadeBottom {
+  mask-image: linear-gradient(180deg, #000000a0, transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000000a0, transparent);
+  -moz-mask-image: linear-gradient(180deg, #000000a0, transparent);
+  -o-mask-image: linear-gradient(180deg, #000000a0, transparent);
+  -ms-mask-image: linear-gradient(180deg, #000000a0, transparent);
+  margin-top: 5px;
+  max-height: 80px;
+  cursor: pointer;
+}
+
+#postTitle {
+  text-align: center;
+  margin-bottom: 0px;
+  margin-top: 5px;
+  font-size: 2em;
+}
+
+#postAuthor {
+  text-align: center;
+  margin-top: 0px;
+  font-size: 1em;
+}
+
+#message {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+#showPost {
+  background-color: var(--background-color-translucent);
+  width: 80vw;
+  height: fit-content;
+  overflow-y: auto;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  padding: 5vw;
+  min-height: 40vw;
+  position: relative;
+}
+
+#buttonBox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+}
+
+#editPostButton {
+  font-size: 2vw;;
+  border-radius: 15px;
+  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: var(--background-alt-color);
+}
+
+#showPostDeleteButton {
+  font-size: 2vw;
+  border-radius: 15px;
+  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: var(--background-alt-color);
+}
+
+
+#showPost #message p {
+  // line-height: calc(1em + 0.1 * (100vw - 21em) / 14);
+  font-size: 2vw;
+  line-height: 1.5;
+  @media (min-width: 600px) and (max-width: 900px) {
+    font-size: 1.2em;
+    line-height: 2;
+  }
+}
+
+#profile {
+  text-align: left;
+  max-width: 80vw;
+}
+
+tr:nth-child(odd) {
+  background: var(--background-alt-color);
+}
+
+#avatar {
+  width: 200px;
+  @media (min-width: 600px) and (max-width: 900px) {
+    width: 30vw;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+  }
+  @media (max-width: 600px) {
+    width: 20vw;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+  }
+}
+
+button.login {
+  grid-column: 2/3;
+  font-size: 1.8em;
+  border: 2px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+h2.login {
+  grid-column: 2/3;
+  font-size: 1.15em;
+}
+
+#links {
+  display: grid;
+  grid-row: 5/6;
+  grid-column: span 5;
+  height: 50px;
+  justify-content: center;
+}
+
+#newUser {
+  grid-row: 1/2;
+}
+
+#forgotPassword {
+  grid-row: 2/3;
+}
+
+label {
+  font-size: 2em;
+  margin-right: 10px;
+}
+
+input {
+  font-size: 2em;
+  background: var(--background-color);
+  color: var(--color);
+  border-color: var(--border-color);
+  border-width: 1px;
+  opacity: 75%;
+}
+
+label.login {
+  grid-column: 1/2;
+}
+
+  .login {
+  grid-column: 2/4;
+}
+
+h2.login {
+  grid-column: 2/3;
+}
+
+#loginScreen {
+  display: grid;
+}
+
+button {
+  font-size: 1em;
+  background-color: var(--background-color);
+  color: var(--color);
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px var(--border-color) solid;
+}
+
+#box {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: auto auto auto 50px;
+  max-width: 600px;
+  justify-self: center;
+  grid-gap: 15px;
+  background-image: none;
+}
+
+#head {
+  height: fit-content;
+  margin-bottom: 0px;
+}
+
+.newPostButton {
+  background-color: var(--green);
+  @media (max-width: 900px) {
+    font-size: 3.5vw;
+    margin: 0;
+  }
+}
+
+#newPostButton {
+  margin-bottom: 20px;
+  @media (max-width: 900px) {
+    margin: 0;
+    position: absolute;
+    top: 50px;
+    right: 35px;
+    font-size: 3.5vw;
+  }
+}
+
+#postMessageButton {
+  @media (max-width: 900px) {
+    font-size: 3.5vw;
+    margin: 0;
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+  }
+}
+
+.deleteButton {
+  background-color: var(--red);
+}
+
+#cancelButton {
+  @media (max-width: 900px) {
+    font-size: 3.5vw;
+    margin: 0;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+  }
+}
+
+.neutralButton {
+  background-color: var(--neut);
+}
+
+.restoreButton {
+  background-color: var(--neut);
+}
+
+.bigButton {
+  font-size: 2em;
+}
+
+h1, h2, h3, h4 {
+  font-size: revert;  
+}
+
+table {
+  width: 70vw;
+}
+
+.postList {
+  tr:nth-child(odd) {
+    td:nth-child(2) {
+      border: 1px var(--border-color) solid;
+    }
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.edit-area {
+  border-right: solid var(--border-color) 1px;
+  outline: none;
+  min-height: 19px;
+  min-width: 19px;
+}
+
+.hiddenItem {
+  display: none;
+  visibility: hidden;
+}
+
+#profile input {
+  border: none;
+  background-color: transparent red($color: #000000);
+  font-size: 1em;
+  max-width: fit-content;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap .input {
+  position: absolute;
+  width: 100%;
+  left: 0;
+}
+
+.item-dark {
+  display: var(--display-dark)
+}
+
+.item-light {
+  display: var(--display-light);
+}
+
+.hangLeft {
+  text-align: left;
+}
+
+.hangRight {
+  text-align: right;
+}
+
+.ck-content {
+  width: 100%;
+  min-height: 50vh;
+}
+
+.backdrop-blur-md {
+  background-color: var(--background-color);
+}
+
+.cursorBlock {
+  background-color: var(--background-alt-color);
+}
+
+.belowButtons {
+  text-align: left;
+}
+
+.reactBox {
+  margin-bottom: 30px;
+}
+
+.reactBox .react {
+  display: none;
+}
+
+.reactBox:hover {
+  .react {
+    display: block;
+  }
+  @media (min-width: 900px) {
+    #reaction {
+      display: none;
+    }
+  }
+}
+
+.reactioninvisible {
+  display: none;
+}
+
+.reaction {
+  cursor: pointer;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  height: 120px;
+  text-align: center;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 20px;
+  left: 0px;
+}
+
+.comment {
+  border: solid var(--border-color) 2px;
+  border-radius: 6px;
+  padding-bottom: 10px;
+  background: var(--background-color);
+  width: 60vw;
+}
+
+.commentAuthor {
+  font-size: .9em;
+  position: relative;
+  top: -15px;
+  width: fit-content;
+  text-shadow: 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color), 
+    0px 0px 3px var(--background-color);
+}
+
+.commentary {
+  margin-top: -15px;
+}
+
+#newComment {
+  background-color: var(--background-alt-color);
+  width: 100%;
+  margin-top: 10px;
+  resize: none;
+  border-radius: 10px;
+  border: var(--border-color) solid;
+  color: var(--color);
+  font-size: 1em;
+}
+
+#newCommentBox {
+  display: none;
+}
+
+#saveCommentButton {
+  margin-bottom: 20px;
+  border: none;
+  justify-self: right;
+  position: relative;
+  top: -25px;
+  right: -25px;
+  background: var(--glass);
+  font-size: .9em;
+}
+
+#addCommentButton {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#addCommentButtonSpan {
+  display: block;
+  padding-top: 15px;
+}
+
+.commentsHeader {
+  font-size: 2em;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+#commentHeader {
+  width: 60vw;
+  margin-bottom: 20px;
+}
+
+#commentHeaderRow {
+  background-color: transparent;
+}
+
+#mustMatch {
+  color: red;
+  font-size: 1.5em;
+}
+
+#doMatch {
+  color: green;
+  font-size: 1.5em;
+}
+
+#tipsbox {
+  color: burlywood;
+  font-size: 1.5em;
+}
+
+#easy {
+  color: red;
+  font-size: 1.5em;
+}
+
+#moderate {
+  color: pink;
+  font-size: 1.5em;
+}
+
+#good {
+  font-size: 1.5em;
+  color: var(--color);
+}
+
+#better {
+  color: aqua;
+  font-size: 1.5em;
+}
+
+#best {
+  color: green;
+  font-size: 1.5em;
+}
+
+#passwordResetButton:disabled {
+  background-color: gray;
+}
+
+.eye {
+  font-size: 1.5em;
+  position: absolute;
+  line-height: 2;
+  right: 4%;
+  cursor: pointer;
+  color: #606060;
+}
+
+.passwordContainer {
+  width: 400px;
+  height: fit-content;
+  position: relative;
+}
+
+#adminUserTable {
+  font-size: 2em;
+  width: 60vw;
+  @media (max-width: 900px) {
+    width: 90vw;
+    font-size: 3vw;
+  }
+}
+
+.userListTable {
+  padding: 10px;
+}
+
+#userEditTable {
+  @media (max-width: 900px) {
+      width: 90vw;
+      font-size: 3vw;
+  }
+}
+
+#newPost {
+  @media (max-width: 900px) {
+    width: 90vw;
+  }
+}
+
+#editorBox {
+  position: relative;
+}
+
+#saveChangesButton {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #00cc0080;
+  font-size: 1.3vw;
+}
+
+.messageCell {
+  width: 55vw;
+  overflow: hidden;
+  max-height: 50px;
+}
+
+.articlePreviewRow {
+  max-height: 150px;
+}
+
+.roadmapList {
+  list-style: decimal;
+}
