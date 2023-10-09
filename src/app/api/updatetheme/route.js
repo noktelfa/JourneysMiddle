@@ -3,11 +3,11 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   const res = await request.json();
-  const id = res.id;
+  const userid = res.userid;
 	const theme = res.theme;
   
   try {
-    const userSQL = `UPDATE users SET Theme='${theme}' where UserId=${id}`;
+    const userSQL = `UPDATE users SET Theme='${theme}' where UserId=${userid}`;
     const valueParams = [];
     const themedUser = await query({
       query: userSQL,

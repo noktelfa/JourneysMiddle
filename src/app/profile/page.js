@@ -35,11 +35,11 @@ export default function GET(request) {
 		if (document.body.className.match('theme-dark')) {
 			document.body.classList.remove('theme-dark');
 			document.body.classList.add('theme-light');
-			updateTheme(userId, 'light');
+			updateTheme('light');
 		} else if (document.body.className.match('theme-light')) {
 			document.body.classList.remove('theme-light');
 			document.body.classList.add('theme-dark');
-			updateTheme(userId, 'dark');
+			updateTheme('dark');
 		}	
 	};	
 
@@ -83,7 +83,7 @@ export default function GET(request) {
 		});
 		const reply = await response.json();
 	};
-
+ 
 	const confirmUnique = async (parameter, datum) => {
 		const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/isunique?id=${userId}&${parameter}=${datum}`;
 		const response = await fetch(apiUrlEndpoint);
@@ -100,7 +100,7 @@ export default function GET(request) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				userId: userId,
+				userid: userId,
 				theme: newTheme,
 			}),
 		});	

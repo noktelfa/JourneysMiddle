@@ -50,12 +50,13 @@ const authOptions = {
 				);
 				let userData = await res.json();
 				userData = userData.user;
-				if (userData !== null) {
+				if (userData != null) {
 					session.userid = userData.userid;
 					session.admin = !!userData.admin;
 					session.deleted = !!userData.deleted;
 					session.isRegistered = true;
 					token.admin = !!userData.admin;
+					token.theme = userData.theme;
 				}
 				session.token = token;
 			}
@@ -68,19 +69,12 @@ const authOptions = {
 					`${process.env.NEXT_PUBLIC_SITE_URL}/api/finduserbyemail?email=${profile.email}`
 				);
 				let userData = await res.json();
-				if (userData !== null) {
-					userData = userData.user;
-					if (userData.deleted) {
-						return false;
-					}
-				} else {
-				}
+				if (userData !== null && userData.user.deleted) return false;
 				return profile.email_verified;
 			}
 
-			if (account.provider === 'credentials') {
-				return !account.deleted;
-			}
+			if (account.provider === 'credentials') return !account.deleted;
+			
 			return true;
 		},
 	},

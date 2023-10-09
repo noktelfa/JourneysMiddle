@@ -10,8 +10,22 @@ export default function GET(request) {
 
 	const { data: session, status } = useSession();
 	const [showReactions, setShowReactions] = useState(false);
+	
+		const [article, setArticle] = useState({
+			title: '',
+			content: '',
+			author: '',
+			authorid: '',
+			articleid: '',
+			reactions: '',
+			comments: '',
+			isReader: '',
+		});
 
 	if (status === 'loading') return <h1> loading... please wait</h1>;
+
+	const isLogged = status === 'authenticated';
+	const isAdmin = isLogged && session.admin;
 	
 	const router = useRouter();
 
@@ -82,17 +96,6 @@ export default function GET(request) {
 		});
 	};
 
-	const [article, setArticle] = useState({
-		title: '',
-		content: '',
-		author: '',
-		authorid: '',
-		articleid: '',
-		isme: '',
-		reactions: '',
-		comments: '',
-	});
-	
 	const searchParams = useSearchParams();
 	const post = searchParams.get('post');
 	
@@ -105,6 +108,7 @@ export default function GET(request) {
 					credentials: 'include',
 				});
 				const res = await response.json();
+				var isReader = isLogged && session && session.userid === res.article.authorid;
 				if(res.article) {
 					setArticle({
 						title: res.article.title,
@@ -114,6 +118,7 @@ export default function GET(request) {
 						articleid: post,
 						reactions: res.article.reactions,
 						comments: res.article.comments,
+						isReader: isReader,
 					});
 				}
 			}
@@ -123,20 +128,27 @@ export default function GET(request) {
 		return (
 			<div className="flex min-h-screen flex-col items-center p-6">
 				<div key={article.id} id="showPost">
-					<div id="buttonBox">
-						<Link
-							href={{
-								pathname: '/editpost',
-								query: { article: post },
-							}}
-						>
-							<button id="editPostButton">Edit</button>
-						</Link>
-						<br />
-						<button id="showPostDeleteButton" onClick={deleteArticle}>
-							Delete
-						</button>
-					</div>
+					{isLogged && (
+						<div id="buttonBox">
+							{article.isReader && (
+								<Link
+									href={{
+										pathname: '/editpost',
+										query: { article: post },
+									}}
+								>
+									<button id="editPostButton">Edit</button>
+								</Link>
+							)}
+							{(article.isReader || isAdmin) && (
+								<div>
+									<button id="showPostDeleteButton" onClick={deleteArticle}>
+										Delete
+									</button>
+							</div>
+								)}
+						</div>
+					)}
 					<h1 id="postTitle">{article.title}</h1>
 					<h3 id="postAuthor">
 						author:&nbsp;
@@ -162,7 +174,7 @@ export default function GET(request) {
 				</div>
 				<div className="reactBox">
 					<div
-						className={ showReactions ? 'reactioninvisible' : 'reaction' }
+						className={showReactions ? 'reactioninvisible' : 'reaction'}
 						id="reaction"
 						dangerouslySetInnerHTML={{ __html: article.reactions }}
 						onClick={showReact}
@@ -231,10 +243,7 @@ export default function GET(request) {
 							<tr id="commentHeaderRow">
 								<td className="hangLeft commentsHeader">Comments</td>
 								<td id="addCommentButtonSpan" className="hangRight">
-									<span
-										id="addCommentButton"
-										onClick={createComment}
-									>
+									<span id="addCommentButton" onClick={createComment}>
 										Add a comment
 									</span>
 								</td>

@@ -6,22 +6,26 @@ export async function GET(request) {
 	const email = searchParams.get('email');
 
 	try {
-		const userSQL = `SELECT UserId, FirstName, LastName, Motto, Email, Admin, Deleted, Password FROM users WHERE Email="${email}"`;
+		const userSQL = `SELECT UserId, FirstName, LastName, Motto, Email, Theme, Admin, Deleted FROM users WHERE Email="${email}"`;
 		const valueParams = [];
 
 		let user = await query({ query: userSQL, values: [valueParams] });
-		user = user[0];
-		const userData = {
-			userid: user.UserId,
-			firstname: user.FirstName,
-			lastname: user.LastName,
-			username: user.Username,
-			motto: user.Motto,
-			admin: user.Admin,
-			deleted: user.Deleted,
-			password: user.Password,
+		if(user) {
+			user = user[0];
+			const userData = {
+				userid: user.UserId,
+				firstname: user.FirstName,
+				lastname: user.LastName,
+				username: user.Username,
+				motto: user.Motto,
+				theme: user.Theme,
+				admin: user.Admin,
+				deleted: user.Deleted,
+			}
+			return NextResponse.json({ user: userData });
+		} else {
+			return NextResponse.json({ problem: 'User not found'})
 		};
-		return NextResponse.json({ user: userData });
 	} catch (error) {
 		return NextResponse.json({ problem: error });
 	}

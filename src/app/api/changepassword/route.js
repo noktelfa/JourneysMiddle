@@ -25,7 +25,7 @@ export async function POST(request) {
     const oldPassword = req.oldPassword;
     const newPassword = req.newPassword;
 
-		if (compareSync(oldPassword, userData.password)) {
+		if (!compareSync(oldPassword, userData.password)) {
       let salt = genSaltSync(10);
       let newHash = hashSync(newPassword, salt);
 			const passwordSQL = `UPDATE users SET Password='${newHash}' WHERE UserId=${session.userid}`;
@@ -36,7 +36,7 @@ export async function POST(request) {
 			});
       return NextResponse.json({ Success: passwordChanged });
 		} else {
-      return NextResponse.json({error: 'Password error!'})
+      return NextResponse.json({error: 'Password incorrect!'})
     }
   } catch(error) {
       console.log(error);

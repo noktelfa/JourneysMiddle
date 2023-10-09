@@ -12,13 +12,13 @@ export default function GET(request) {
 
 	const router = useRouter()
 
-	const [strengthValues, setStrengthValues] = useState(['blank', '']);
+	const [strengthValues, setStrengthValues] = useState(['', '']);
 	const [mustMatch, setMustMatch] = useState(false);
 	const [doMatch, setDoMatch] = useState(false);
 	const [passwordButtonDisabled, setPasswordButtonDisabled] = useState(true);
 
 	const strengths = [
-		['blank', ''],
+		['', ''],
 		['easy', 'Too Easy'],
 		['moderate', 'Moderately easy'],
 		['good', 'Medium hard'],
@@ -34,7 +34,7 @@ export default function GET(request) {
 	  const [passwordVisible, setPasswordVisible] = useState('password');
 
 		useEffect(() => {
-			function getPageData() {
+			function resetEyePosition() {
 				togglePasswordVisible();
 				togglePasswordVisible();
 			}

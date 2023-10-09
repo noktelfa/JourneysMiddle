@@ -34,7 +34,7 @@ export default function GET(request) {
 
   const [oldPasswordValue, setOldPasswordValue] = useState('');
   const [newPasswordValue, setNewPasswordValue] = useState('');
-  const [strengthValues, setStrengthValues] = useState(['blank', '']);
+  const [strengthValues, setStrengthValues] = useState(['', '']);
   const [mustMatch, setMustMatch] = useState(false);
   const [doMatch, setDoMatch] = useState(false);
 	const [passwordButtonDisabled, setPasswordButtonDisabled] = useState(true);
@@ -54,7 +54,9 @@ export default function GET(request) {
 		const reply = await response.json();
     if(reply.Success) {
   		router.push(`${process.env.NEXT_PUBLIC_SITE_URL}`);
-    }
+    } else {
+			alert(reply.error)
+		}
   };
 
   const [passwordVisible, setPasswordVisible] = useState('password');

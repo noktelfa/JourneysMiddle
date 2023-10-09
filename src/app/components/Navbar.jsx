@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
-
 export default function Navbar() {
 	const { data: session, status, update } = useSession();
 	const [hoveredPath, setHoveredPath] = useState();
@@ -28,7 +27,7 @@ export default function Navbar() {
 		}
 	} 
 	
-	const updateTheme = async (id, newTheme) => {
+	const updateTheme = async (userid, newTheme) => {
 		const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/updatetheme`;
 		const response = await fetch(apiUrlEndpoint, {
 			method: 'POST',
@@ -36,7 +35,7 @@ export default function Navbar() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				id: id,
+				userid: userid,
 				theme: newTheme,
 			}),
 		});

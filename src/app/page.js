@@ -16,10 +16,22 @@ export default function Home() {
 		getPageData();
 	}, []);
 
-	const { session, status, update } = useSession();
+	const { data: session, status } = useSession();
 	const [dataResponse, setdataResponse] = useState([]);
-
+ 
+	
 	if (status === 'loading') return <h1> loading... please wait</h1>;
+	
+	if (status === 'authenticated') {
+		if (session && session.token.theme === 'light') {
+			document.body.classList.remove('theme-dark');
+			document.body.classList.add('theme-light');
+		} else if (session && session.token.theme === 'dark') {
+			document.body.classList.remove('theme-light');
+			document.body.classList.add('theme-dark');
+		}
+	}
+
 
 	return (
 		<div className="flex min-h-screen flex-col items-center p-6">
