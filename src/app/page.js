@@ -21,6 +21,7 @@ export default function Home() {
  
 	
 	if (status === 'loading') return <h1> loading... please wait</h1>;
+	const isLogged = status === 'authenticated'
 	
 	if (status === 'authenticated') {
 		if (session && session.token.theme === 'light') {
@@ -35,6 +36,7 @@ export default function Home() {
 
 	return (
 		<div className="flex min-h-screen flex-col items-center p-6">
+			{isLogged && (
 			<div className="hangLeft">
 				<Link href={{ pathname: '/newpost' }}>
 					<button className="newPostButton" id="newPostButton">
@@ -42,7 +44,7 @@ export default function Home() {
 					</button>
 				</Link>
 			</div>
-
+			)}
 			{dataResponse.map((post) => {
 				return (
 					<div key={post.id} className="post">
