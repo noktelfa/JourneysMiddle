@@ -19,18 +19,14 @@ export default function GET(request) {
 		const [registerButtonDisabled, setRegisterButtonDisabled] = useState(true);
 	  const [passwordVisible, setPasswordVisible] = useState('text');
 		const [eyeColor, setEyeColor] = useState('lightgray');
-		const [strengthValues, setStrengthValues] = useState(['blank', '']);
+		const [strengthValues, setStrengthValues] = useState(['', '']);
 
 	useEffect(() => {
-		document.getElementById('firstName').value = 'Tobias'
-		document.getElementById('lastName').value = 'King';
-		document.getElementById('username').value = 'toblerone';
-		document.getElementById('email').value = 'toby@journeysmiddle.org';
 		togglePasswordVisible();
 	}, []);
 
 		const strengths = [
-			['blank', ''],
+			['', ''],
 			['easy', 'Too Easy'],
 			['moderate', 'Moderately easy'],
 			['good', 'Medium hard'],

@@ -155,7 +155,7 @@ export default function GET(request) {
 		const recoverPassword = async () => {
 			const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}//api/passwordrecovery?username=${document.getElementById('username').value}`;
 			const response = await fetch(apiUrlEndpoint);	
-			document.getElementById('notification').innerHTML = 'If you have an account, a recovery email is being sent to yoru registered email address.'
+			document.getElementById('notification').innerHTML = 'If you have an account, a recovery email is being sent to your registered email address.'
 			setTimeout(() => router.push('/'), 20000)
 		}
 	
