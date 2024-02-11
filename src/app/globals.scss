@@ -5,11 +5,12 @@
 
 .theme-light {
   --border-color: darkgray;
-  --color: black;
+  --color: #0a0908;
   --bright-color: gray;
-  --background-color: white;
-  --background-alt-color: beige;
+  --background-color: #eeeae6;
+  --background-alt-color: #696969;
   --background-image: url("/images/bgimage2.gif");
+  --background-color-translucent: #ebe6e1c0;
   --red: pink;
   --neut: aqua;
   --green: aquamarine;
@@ -21,11 +22,23 @@
   --visibility-dark: hidden;
   --display-light: block;
   --display-dark: none;
+  --light: white;
+
+  --ck-color-text: eae0d5;
+
+  --color2: #111111;
+  --color3: #232323;
+  --color4: #343434;
+  --color5: #464646;
+  --color6: #575757;
+
+
 }
 
 .theme-dark  {
   --border-color: gray;
-  --color: beige;
+  --color: #EEE;
+  --bright-color: gray;
   --background-color: black;
   --background-alt-color: #202020;
   --background-color-translucent: #000000C0;
@@ -34,13 +47,14 @@
   --neut: blue;
   --green: green;
   --glass: #00000088;
-  --menu-color: #f2f6ae;
+  --menu-color: #F0F0F0;
   --menu-hover-background: #CFD8DC;
   --menu-hover-color: #00a000;
   --visibility-light: hidden;
   --visibility-dark: visible;
   --display-light: none;
   --display-dark: block;
+  --light: #333;
   
   --ck-color-text: white;
   --ck-color-base-foreground: hsl(0, 100%, 94%);
@@ -275,26 +289,18 @@ body {
   text-align: center;
 }
 
-#editPostButton {
-  font-size: 2vw;;
-  border-radius: 15px;
-  padding: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background: var(--background-alt-color);
-}
-
+#editPostButton,
 #showPostDeleteButton {
   font-size: 2vw;
   border-radius: 15px;
-  padding: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background: var(--background-alt-color);
+  padding: 5px 15px;
+  transition: 500ms;
+}
+
+#showPostDeleteButton:hover,
+#editPostButton:hover {
+  background-color: var(--light);
+  transition: 500ms;
 }
 
 
@@ -314,7 +320,7 @@ body {
 }
 
 tr:nth-child(odd) {
-  background: var(--background-alt-color);
+  background: var(--background-color);
 }
 
 #avatar {
@@ -393,9 +399,9 @@ h2.login {
 
 button {
   font-size: 1em;
-  background-color: var(--background-color);
+  // background-color: var(--background-color);
   color: var(--color);
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   border: 2px var(--border-color) solid;
 }
@@ -416,7 +422,10 @@ button {
 }
 
 .newPostButton {
-  background-color: var(--green);
+  // background-image: linear-gradient(var(--background-color) 0%, 
+    // var(--bright-color) 51%, var(--background-color) 100%);
+  background-image: linear-gradient(var(--background-color) 70%, var(--bright-color) 90%);
+  padding: 0px 5px;
   @media (max-width: 900px) {
     font-size: 3.5vw;
     margin: 0;
@@ -434,6 +443,12 @@ button {
   }
 }
 
+#newPostButtonContainer {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+}
+
 #postMessageButton {
   @media (max-width: 900px) {
     font-size: 3.5vw;
@@ -445,7 +460,9 @@ button {
 }
 
 .deleteButton {
-  background-color: var(--red);
+  // background-color: var(--background-alt-color);
+  padding: 0px 5px;
+  background-image: linear-gradient(var(--light) 70%, var(--bright-color) 100%);
 }
 
 #cancelButton {
@@ -459,7 +476,8 @@ button {
 }
 
 .neutralButton {
-  background-color: var(--neut);
+  // background-color: var(--neut);
+  padding: 0px 5px;
 }
 
 .restoreButton {
@@ -479,9 +497,12 @@ table {
 }
 
 .postList {
+  border-collapse: separate;
+  border-spacing: 0 1em;
   tr:nth-child(odd) {
+    padding: 100px 0px;
     td:nth-child(2) {
-      border: 1px var(--border-color) solid;
+      border: 1px var(--background-alt-color) solid;
     }
   }
 }
@@ -546,6 +567,9 @@ table {
 
 .cursorBlock {
   background-color: var(--background-alt-color);
+  background-image: linear-gradient(var(--bright-color) 0%,
+    var(--background-color) 25%, var(--background-color) 75%,
+    var(--bright-color) 100%);
 }
 
 .belowButtons {
@@ -632,7 +656,7 @@ table {
 }
 
 #newComment {
-  background-color: var(--background-alt-color);
+  background-color: var(--background-color-translucent);
   width: 100%;
   margin-top: 10px;
   resize: none;
@@ -652,9 +676,10 @@ table {
   justify-self: right;
   position: relative;
   top: -25px;
-  right: -25px;
-  background: var(--glass);
+  right: 0px;
+  // background: var(--glass);
   font-size: .9em;
+  background-image: linear-gradient(var(--background-alt-color) 0%, var(--light) 100%);
 }
 
 #addCommentButton {
@@ -777,8 +802,9 @@ table {
   right: 5px;
   padding: 10px;
   border-radius: 20px;
-  background-color: #00cc0080;
+  // background-color: #00cc0080;
   font-size: 1.3vw;
+  background-image: linear-gradient(var(--light) 0%, var(--background-alt-color) 100%);
 }
 
 .messageCell {
@@ -794,3 +820,33 @@ table {
 .roadmapList {
   list-style: decimal;
 }
+
+.editTitle {
+  font-size: 2em;
+}
+
+.notification {
+  color: #00FF00;
+  // transition-duration: 3s;
+  font-size: 2em;
+  position: fixed;
+}
+
+.notifyOff {
+  color: #00FF0000;
+  transition-duration: 3s;
+  font-size: 2em;
+  position: fixed;
+}
+
+#chat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: 1px var(--border-color);
+}
+
+// #toasterBox {
+//   position: absolute;
+//   top: 0;
+// }

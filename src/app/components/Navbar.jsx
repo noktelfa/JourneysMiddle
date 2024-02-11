@@ -13,6 +13,7 @@ export default function Navbar() {
 	if(status === 'loading') return (<div></div>)
 	
 	let pathname = usePathname() || '/';
+	if (pathname == '/showpost') pathname = '/';
 	
 	
 	const themeSwap = () => {

@@ -11,10 +11,10 @@ export async function POST(request) {
       const valueParams = [];
       const foundUser = await query({ query: userSQL, values: [valueParams] });
 
-      return NextResponse.json({ available: true})
+      return NextResponse.json({ success: foundUser.changedRows === 1});
 
   } catch(error) {
     console.log(error)
-	return NextResponse.json({ available: false });
+	return NextResponse.json({ success: false });
 	  }
 }

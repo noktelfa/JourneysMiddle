@@ -42,8 +42,25 @@ export default function GET(request) {
 		let res = await response.json();
 		setuserPosts(res.extantPosts);
 		setdeletedPosts(res.deletedPosts);
+	}; 
+	
+	const restorePost = async (postid) => {
+		const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/restorearticle`;
+		const response = await fetch(apiUrlEndpoint, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				postid: postid,
+				user: userid,
+			}),
+		});
+		let res = await response.json();
+		setuserPosts(res.extantPosts);
+		setdeletedPosts(res.deletedPosts);
 	};
-
+	
   const { data: session, status } = useSession();
   if (status === 'loading') return <h1> loading... please wait</h1>;
 

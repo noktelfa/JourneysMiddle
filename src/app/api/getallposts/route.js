@@ -14,7 +14,7 @@ export async function GET(request) {
 		const users = new Map();
 		const deleted = [];
 		userList.forEach((user) =>
-		users.set(user.UserId, user.FirstName + ' ' + user.LastName)
+			users.set(user.UserId, user.FirstName + ' ' + user.LastName)
 		);
 		userList.forEach((user) => {
 			if(user.Deleted) {

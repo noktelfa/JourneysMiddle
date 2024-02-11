@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import Navbutton from './components/Navbutton';
+import Chatwindow from './components/Chatwindow'
 import './globals.scss';
 
 import { NextAuthProvider } from './components/Nextauthprovider';
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
 					<main className="flex min-h-screen flex-col items-center p-6">
 						{children}
 					</main>
+					<Chatwindow />
 				</NextAuthProvider>
 			</body>
 		</html>

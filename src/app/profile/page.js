@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import toast, { Toaster, useToaster } from 'react-hot-toast';
 
 export default function GET(request) {
 
@@ -14,10 +16,13 @@ export default function GET(request) {
 	const [motto, setMotto] = useState('');
 	const [avatar, setAvatar] = useState('');
 	const [theme, setTheme] = useState('');
+	const [notifier, setNofitier] = useState('notifyOff')
 	
 	const [userPosts, setuserPosts] = useState([]);
 	const [deletedPosts, setdeletedPosts] = useState([]);
 	
+	const { toasts, handlers } = useToaster();
+
 	const { data: session, status } = useSession({
 		required: true,
 		onUnauthenticated() {
@@ -25,7 +30,24 @@ export default function GET(request) {
 		},
 	});
 	
-	
+	useEffect(() => {
+		async function getProfileData() {
+			const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/profile?user=${userId}`;
+			const response = await fetch(apiUrlEndpoint);
+			const res = await response.json();
+			setuserPosts(res.posts);
+			setdeletedPosts(res.deleted);
+			setFirstName(res.user.firstName);
+			setLastName(res.user.lastName);
+			setEmail(res.user.email);
+			setUsername(res.user.username);
+			setMotto(res.user.motto);
+			setAvatar(res.user.avatar);
+			setTheme(res.user.preferredTheme);
+		}
+		getProfileData();
+	}, []);
+
 	const isProfile = session && session.isRegistered;
 	const isAuthed = status === 'authenticated';
 	const isAdmin = session && session.admin;
@@ -55,17 +77,24 @@ export default function GET(request) {
 			fileReader.onload = async () => {
 				const srcData = fileReader.result;
 				const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/setprofiledata`;
-				const response = await fetch(apiUrlEndpoint, {
+				const response = fetch(apiUrlEndpoint, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({
-						newAvatar: srcData,
+						Avatar: srcData,
 						userid: userId,
 					}),
 				});
-				setAvatar(srcData);
+				toast.promise(response, {
+					loading: 'Loading',
+					success: () => {
+						setAvatar(srcData);
+						return 'Changes Saved!'
+					},
+					error: 'Error saving profile data',
+				});
 			};
 			fileReader.readAsDataURL(imageFile);
 		}
@@ -74,14 +103,18 @@ export default function GET(request) {
 	const updateProfileData = async (userProfileData) => {
 		userProfileData['userid'] = userId;
 		const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/setprofiledata`;
-		const response = await fetch(apiUrlEndpoint, {
+		const response = fetch(apiUrlEndpoint, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(userProfileData),
 		});
-		const reply = await response.json();
+		toast.promise(response, {
+			loading: 'Loading',
+			success: 'Changes Saved!',
+			error: 'Error saving profile data',
+		});
 	};
  
 	const confirmUnique = async (parameter, datum) => {
@@ -116,7 +149,7 @@ export default function GET(request) {
 				});
 			} else {
 				let tempUsername = username
-				setUsername(usernameData);
+				// setUsername(usernameData);
 				setUsername(tempUsername);
 				alert('Username already in use')
 			}
@@ -201,31 +234,23 @@ export default function GET(request) {
 		setdeletedPosts(res.deletedPosts);
 	};
 	
-	useEffect(() => {
-		async function getProfileData() {
-			const apiUrlEndpoint = `${process.env.NEXT_PUBLIC_SITE_URL}/api/profile?user=${userId}`;
-			const response = await fetch(apiUrlEndpoint);
-			const res = await response.json();
-			setuserPosts(res.posts);
-			setdeletedPosts(res.deleted);
-			setFirstName(res.user.firstName);
-			setLastName(res.user.lastName);
-			setEmail(res.user.email);
-			setUsername(res.user.username);
-			setMotto(res.user.motto);
-			setAvatar(res.user.avatar);
-			setTheme(res.user.preferredTheme);
-		}
-			getProfileData();
-	}, []);
-
 	if (status === 'loading') {
 		return <div>Loading...</div>;
-	}
+	} 
+	
+	const router = useRouter();
+	
+	if(!isAuthed) router.replace('/')
 
 		try {
 			return (
 				<div className="flex min-h-screen flex-col items-center p-6">
+					<div id="toasterBox">
+						<Toaster />
+					</div>
+					<div id="notification" className={notifier}>
+						Changes Saved
+					</div>
 					<div id="profile">
 						<img
 							id="avatar"
@@ -335,7 +360,7 @@ export default function GET(request) {
 												</td>
 											</tr>
 										);
-									})} 
+									})}
 								</tbody>
 							</table>
 							<br />

@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 export default function GET(request) {
 

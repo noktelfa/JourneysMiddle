@@ -23,6 +23,7 @@ const authOptions = {
 				});
 				const user = await res.json();
 				if (res.ok && user) {
+					console.log('user:', user, '\ntypeof user:', typeof user)
 					return user;
 				}
 				return null;

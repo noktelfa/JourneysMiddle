@@ -37,7 +37,7 @@ export default function Home() {
 	return (
 		<div className="flex min-h-screen flex-col items-center p-6">
 			{isLogged && (
-			<div className="hangLeft">
+			<div id="newPostButtonContainer">
 				<Link href={{ pathname: '/newpost' }}>
 					<button className="newPostButton" id="newPostButton">
 						New Post

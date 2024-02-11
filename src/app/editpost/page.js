@@ -65,13 +65,23 @@ export default function GET(request) {
 			<div className="flex min-h-screen flex-col items-center p-6">
 				<div id="showPost">
 					<label htmlFor="title">Title: </label>
-					<input
+					{/* <input
 						type="text"
 						name="title"
 						id="title"
 						value={articleTitle}
 						onChange={(e) => setArticleTitle(e.target.value)}
-					/>
+						className="editTitle"
+					/> */}
+					<span
+						name="title"
+						id="title"
+						onBlur={(e) => setArticleTitle(e.target.innerHTML)}
+						className="editTitle"
+						contentEditable
+					>
+						{articleTitle}
+					</span>
 					<br />
 					<br />
 					<div id="editorBox">
@@ -88,10 +98,7 @@ export default function GET(request) {
 						) : (
 							'loading...'
 						)}
-						<button
-							id="saveChangesButton"
-							onClick={saveChanges}
-						>
+						<button id="saveChangesButton" onClick={saveChanges}>
 							Save Changes
 						</button>
 					</div>
